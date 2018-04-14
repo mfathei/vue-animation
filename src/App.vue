@@ -114,7 +114,7 @@ export default {
           done();
         }
       }, 20);
-    },
+    }, 
     afterLeave(el) {
       console.log("afterLeave");
     },
