@@ -52,7 +52,9 @@
                 <button class="btn btn-primary" @click="addItem">Add Item</button>
                 <br><br>
                 <ul class="list-group">
-                    <li class="list-group-item" v-for="(num, index) in numbers" :key="index" @click="removeItem(index)" style="cursor: pointer">{{ num }}</li>
+                    <transition-group name="slide">
+                        <li class="list-group-item" v-for="(num, index) in numbers" :key="index" @click="removeItem(index)" style="cursor: pointer">{{ num }}</li>
+                    </transition-group>
                 </ul>
             </div>
         </div>
@@ -114,19 +116,19 @@ export default {
           done();
         }
       }, 20);
-    }, 
+    },
     afterLeave(el) {
       console.log("afterLeave");
     },
     leaveCancelled(el) {
       console.log("leaveCancelled");
     },
-    addItem(){
-        const pos = Math.floor(Math.random() * this.numbers.length);
-        this.numbers.splice(pos, 0, this.numbers.length + 1)
+    addItem() {
+      const pos = Math.floor(Math.random() * this.numbers.length);
+      this.numbers.splice(pos, 0, this.numbers.length + 1);
     },
-    removeItem(index){
-        this.numbers.splice(index, 1);
+    removeItem(index) {
+      this.numbers.splice(index, 1);
     }
   },
   components: {
@@ -152,6 +154,7 @@ export default {
 .fade-leave-active {
   transition: opacity 1s;
   opacity: 0;
+  position: absolute;
 }
 
 .slide-enter {
@@ -170,6 +173,10 @@ export default {
   animation: slide-out 1s ease-out forwards;
   transition: opacity 3s; /* I set it to 3 s */
   opacity: 0;
+}
+
+.slide-move {
+  transition: transform 1s;
 }
 
 @keyframes slide-in {
